@@ -1,23 +1,21 @@
 import os
 from Bio import AlignIO, SeqIO
 import re
-import numpy as np
 import matplotlib.pyplot as plt
 
 # File paths. The first is given in Stockholm form, while the second is given in FASTA form, which is desired.
 sto_file = "pf00014/data/pf00014.sto"
 fasta_file = "pf00014/data/pf00014.fasta"
 
-# Check if the FASTA file already exists
+# Check if the FASTA file already exists. If it already exists, then this line is ignored
 if not os.path.exists(fasta_file):
-    print(f"Converting {sto_file} to {fasta_file}...")
 
     # Read the Stockholm alignment
-    alignment = AlignIO.read(sto_file, "stockholm")
+    stockholm = AlignIO.read(sto_file, "stockholm")
 
     # Write to FASTA format
     with open(fasta_file, "w") as output_handle:
-        AlignIO.write(alignment, output_handle, "fasta")
+        AlignIO.write(stockholm, output_handle, "fasta")
 
 fasta_file = "pf00014/data/pf00014.fasta"
 fasta_filtered = "pf00014/data/filtered_pf00014.fasta"
@@ -50,7 +48,7 @@ fasta_final = "pf00014/data/final_pf00014.fasta"
 # Check to see if the filtered FASTA file already exists
 if not os.path.exists(fasta_final):
 
-    # Define the regex pattern for 7+ consecutive dashes
+    # Define the regex pattern for 7+ consecutive dashes (gaps)
     gap_pattern = re.compile(r"-{7,}")
 
     # Open output file for writing
@@ -88,30 +86,29 @@ bmDCA_i_vals, bmDCA_j_vals = extract_valid_pairs(files["bmDCA"], threshold)
 eaDCA_i_vals, eaDCA_j_vals = extract_valid_pairs(files["eaDCA"], threshold)
 edDCA_i_vals, edDCA_j_vals = extract_valid_pairs(files["edDCA"], threshold)
 
-# Create subplots
 fig, axes = plt.subplots(1, 3, figsize=(12, 5))
 
 # Plot bmDCA
 axes[0].scatter(bmDCA_i_vals, bmDCA_j_vals, color='purple', marker='d', s=10, label="bmDCA")
 axes[0].set_title("bmDCA Predicted Contact Map")
-axes[0].set_xlabel("i")
-axes[0].set_ylabel("j")
+axes[0].set_xlabel(r"$i$")
+axes[0].set_ylabel(r"$j$")
 axes[0].spines['left'].set_position('zero')
 axes[0].spines['bottom'].set_position('zero')
 
 # Plot eaDCA
 axes[1].scatter(eaDCA_i_vals, eaDCA_j_vals, color='blue', marker='s', s=5, label="eaDCA")
 axes[1].set_title("eaDCA Predicted Contact Map")
-axes[1].set_xlabel("i")
-axes[1].set_ylabel("j")
+axes[1].set_xlabel(r"$i$")
+axes[1].set_ylabel(r"$j$")
 axes[1].spines['left'].set_position('zero')
 axes[1].spines['bottom'].set_position('zero')
 
 # Plot edDCA
 axes[2].scatter(edDCA_i_vals, edDCA_j_vals, color='green', s=5, label="edDCA")
 axes[2].set_title("edDCA Predicted Contact Map")
-axes[2].set_xlabel("i")
-axes[2].set_ylabel("j")
+axes[2].set_xlabel(r"$i$")
+axes[2].set_ylabel(r"$j$")
 axes[2].spines['left'].set_position('zero')
 axes[2].spines['bottom'].set_position('zero')
 
@@ -122,6 +119,7 @@ energies_fasta = "pf00014/bmDCA/energies.fasta"
 sequence_ids = []
 energies = []
 
+# Read in the energies for each sequence in the PF00014 domain and plot frequencies in a histogram
 with open(energies_fasta, "r") as file:
     for line in file:
         if line.startswith(">"):  # Header line
@@ -142,6 +140,7 @@ mutations_fasta = "pf00014/bmDCA/mutation.fasta"
 mutation_ids = []
 delta_energies = []
 
+# Read in energy changes caused by pointwise mutations and plot frequencies of changes in energy as a result
 with open(mutations_fasta, "r") as file:
     for line in file:
         if line.startswith(">"):  # Header line
