@@ -5,8 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # File paths. The first is given in Stockholm form, while the second is given in FASTA form, which is desired.
-sto_file = "pf00014.sto"
-fasta_file = "pf00014.fasta"
+sto_file = "pf00014/data/pf00014.sto"
+fasta_file = "pf00014/data/pf00014.fasta"
 
 # Check if the FASTA file already exists
 if not os.path.exists(fasta_file):
@@ -19,8 +19,8 @@ if not os.path.exists(fasta_file):
     with open(fasta_file, "w") as output_handle:
         AlignIO.write(alignment, output_handle, "fasta")
 
-fasta_file = "pf00014.fasta"
-fasta_filtered = "filtered_pf00014.fasta"
+fasta_file = "pf00014/data/pf00014.fasta"
+fasta_filtered = "pf00014/data/filtered_pf00014.fasta"
 
 # Check to see if filtered FASTA file already exists
 if not os.path.exists(fasta_filtered):
@@ -45,7 +45,7 @@ if not os.path.exists(fasta_filtered):
             new_record.seq = filtered_sequence
             SeqIO.write(new_record, out_file, "fasta")
 
-fasta_final = "final_pf00014.fasta"
+fasta_final = "pf00014/data/final_pf00014.fasta"
 
 # Check to see if the filtered FASTA file already exists
 if not os.path.exists(fasta_final):
