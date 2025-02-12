@@ -62,8 +62,7 @@ if not os.path.exists(fasta_final):
                 record.seq = sequence_upper  # Capitalize sequence so that these sequences are readable by adabmDCA
                 SeqIO.write(record, out_file, "fasta")
 
-# Define threshold and file paths
-threshold = 0.2
+threshold = 0.7
 files = {
     "bmDCA": "pf00014/bmDCA/frobenius.txt",
     "eaDCA": "pf00014/eaDCA/eaDCA_frobenius.txt",
@@ -86,14 +85,13 @@ bmDCA_i_vals, bmDCA_j_vals = extract_valid_pairs(files["bmDCA"], threshold)
 eaDCA_i_vals, eaDCA_j_vals = extract_valid_pairs(files["eaDCA"], threshold)
 edDCA_i_vals, edDCA_j_vals = extract_valid_pairs(files["edDCA"], threshold)
 
-fig, axes = plt.subplots(1, 3, figsize=(12, 5))
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
 # Plot bmDCA
 axes[0].scatter(bmDCA_i_vals, bmDCA_j_vals, color='purple', marker='d', s=10, label="bmDCA")
 axes[0].set_title("bmDCA Predicted Contact Map")
 axes[0].set_xlabel(r"$i$")
 axes[0].set_ylabel(r"$j$")
-axes[0].spines['left'].set_position('zero')
 axes[0].spines['bottom'].set_position('zero')
 
 # Plot eaDCA
