@@ -138,7 +138,7 @@ mutations_fasta = "pf00014/bmDCA/mutation.fasta"
 mutation_ids = []
 delta_energies = []
 
-# Read in energy changes caused by pointwise mutations and plot frequencies of changes in energy as a result
+# Read in energy changes caused by point-wise mutations and plot frequencies of changes in energy as a result
 with open(mutations_fasta, "r") as file:
     for line in file:
         if line.startswith(">"):  # Header line
