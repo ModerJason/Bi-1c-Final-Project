@@ -62,7 +62,7 @@ if not os.path.exists(fasta_final):
                 record.seq = sequence_upper  # Capitalize sequence so that these sequences are readable by adabmDCA
                 SeqIO.write(record, out_file, "fasta")
 
-threshold = 0.7
+threshold = 0.2
 files = {
     "bmDCA": "pf00014/bmDCA/frobenius.txt",
     "eaDCA": "pf00014/eaDCA/eaDCA_frobenius.txt",
